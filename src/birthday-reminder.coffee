@@ -2,8 +2,8 @@
 #   Track birthdays for users
 #
 # Dependencies:
-#   "node-schedule": "^0.2.9"
 #   "moment": "^2.10.6"
+#   "node-schedule": "^0.6.0"
 #
 # Commands:
 #   set birthday @username dd/mm/ - Set a date of birth for a user
