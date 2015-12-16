@@ -1,7 +1,7 @@
 {
   "name": "hubot-birthday-reminder",
   "description": "A hubot script to track birthdays",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Phill Farrugia <me@phillfarrugia.com>",
   "license": "MIT",
   "keywords": [
