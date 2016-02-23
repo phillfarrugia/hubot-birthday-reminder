@@ -24,7 +24,7 @@ module.exports = (robot) ->
   regex = /^(set birthday) (?:@?([\w .\-]+)\?*) ((0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[0-2]))\b/i
 
   # runs a cron job every day at 9:30 am
-  dailyBirthdayCheck = schedule.scheduleJob '0 30 09 * * 0-7', ->
+  dailyBirthdayCheck = schedule.scheduleJob process.env.BIRTHDAY_CRON_STRING, ->
     console.log "checking today's birthdays..."
     birthdayUsers = findUsersBornOnDate(moment(), robot.brain.data.users)
 
