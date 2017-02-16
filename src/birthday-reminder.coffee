@@ -33,7 +33,7 @@ module.exports = (robot) ->
       # send message for one users birthday
       msg = "<!channel> Today is <@#{birthdayUsers[0].name}>'s birthday!"
       msg += "\n#{quote()}"
-      robot.messageRoom "#general", msg
+      robot.messageRoom "#andre-max", msg
     else if birthdayUsers.length > 1
       # send message for multiple users birthdays
       msg = "<!channel> Today is "
@@ -41,7 +41,7 @@ module.exports = (robot) ->
         msg += "<@#{user.name}>'s#{if idx != (birthdayUsers.length - 1) then " and " else ""}"
       msg += " birthday!"
       msg += "\n#{quote()}"
-      robot.messageRoom "#general", msg
+      robot.messageRoom "#andre-max", msg
 
   robot.hear regex, (msg) ->
     name = msg.match[2]
