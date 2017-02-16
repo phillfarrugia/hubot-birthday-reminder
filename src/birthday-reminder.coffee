@@ -22,6 +22,7 @@ moment = require('moment')
 module.exports = (robot) ->
 
   regex = /^(set birthday) (?:@?([\w .\-]+)\?*) ((0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[0-2]))\b/i
+  regex_remove = /^(remove birthday) (?:@?([\w .\-]+)\?*)\b/i
 
   # runs a cron job every day at 9:30 am
   dailyBirthdayCheck = schedule.scheduleJob process.env.BIRTHDAY_CRON_STRING, ->
@@ -32,7 +33,7 @@ module.exports = (robot) ->
       # send message for one users birthday
       msg = "<!channel> Today is <@#{birthdayUsers[0].name}>'s birthday!"
       msg += "\n#{quote()}"
-      robot.messageRoom "#general", msg
+      robot.messageRoom "#andre-max", msg
     else if birthdayUsers.length > 1
       # send message for multiple users birthdays
       msg = "<!channel> Today is "
@@ -40,7 +41,7 @@ module.exports = (robot) ->
         msg += "<@#{user.name}>'s#{if idx != (birthdayUsers.length - 1) then " and " else ""}"
       msg += " birthday!"
       msg += "\n#{quote()}"
-      robot.messageRoom "#general", msg
+      robot.messageRoom "#andre-max", msg
 
   robot.hear regex, (msg) ->
     name = msg.match[2]
@@ -51,6 +52,19 @@ module.exports = (robot) ->
       user = users[0]
       user.date_of_birth = date
       msg.send "#{name} is now born on #{user.date_of_birth}"
+    else if users.length > 1
+      msg.send getAmbiguousUserText users
+    else
+      msg.send "#{name}? Never heard of 'em"
+      
+  robot.hear regex_remove, (msg) ->
+    name = msg.match[2]
+    
+    users = robot.brain.usersForFuzzyName(name)
+    if users.length is 1
+      user = users[0]
+      user.date_of_birth = null
+      msg.send "#{name} is now a loneliness outsider."
     else if users.length > 1
       msg.send getAmbiguousUserText users
     else
